@@ -35,8 +35,9 @@ client = chromadb.Client()
 
 import torch
 from transformers import AutoTokenizer, AutoModel
+from sentence_transformers import SentenceTransformer
 
-model = AutoModel.from_pretrained('jinaai/jina-embeddings-v2-base-de', trust_remote_code=True, torch_dtype=torch.bfloat16)
+model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model.to(device)
 prinje(device=device)
