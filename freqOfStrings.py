@@ -35,19 +35,19 @@ model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniL
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model.to(device)
 
-class EmbeddingFunction(EmbeddingFunction):
+class Embedding_Function(EmbeddingFunction):
   def __call__(self, input: Documents) -> Embeddings:
     embeddings = model.encode(input)
     return(embeddings.tolist())
 
-LLM_ef = EmbeddingFunction()
+my_embeddings = Embedding_Function()
 
 dbName = "checkStr"
 dbDocs = data_jne
 
 collection = client.create_collection(
   name=dbName,
-  embedding_function=LLM_ef,
+  embedding_function=my_embeddings,
   metadata={"hnsw:space": "cosine"}
 )
 
@@ -55,7 +55,8 @@ for i in range(len(dbDocs)):
   collection.add(
     documents=dbDocs[i],
     ids=str(i),
-    metadatas={"date": str("2023-03-16")})
+    metadatas={"source": "data"}
+  )
 
 dist_threshold = 0.15
 results = []
