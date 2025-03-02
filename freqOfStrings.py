@@ -14,14 +14,8 @@ except:
 data_file = path + "data_source.txt"
 control_data = path + "control_data.xlsx"
 
-
 get_data = open(data_file, "r")
 data_jne = get_data.readlines()
-
-#prinje(data_jne=data_jne)
-len_data = len(data_jne)
-prinje(len_data=len_data)
-
 
 import pandas as pd
 get_control_data = pd.read_excel(control_data) #133497
@@ -40,7 +34,6 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model.to(device)
-prinje(device=device)
 
 class EmbeddingFunction(EmbeddingFunction):
   def __call__(self, input: Documents) -> Embeddings:
@@ -49,7 +42,6 @@ class EmbeddingFunction(EmbeddingFunction):
 
 LLM_ef = EmbeddingFunction()
 
-print(f"list.coll.: {client.list_collections()}")
 dbName = "checkStr"
 dbDocs = data_jne
 
