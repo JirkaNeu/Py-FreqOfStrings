@@ -31,7 +31,7 @@ import torch
 from transformers import AutoTokenizer, AutoModel
 #model = AutoModel.from_pretrained('jinaai/jina-embeddings-v2-base-de', trust_remote_code=True, torch_dtype=torch.bfloat16)
 from sentence_transformers import SentenceTransformer
-#model = SentenceTransformer('sentence-transformers/LaBSE')
+model = SentenceTransformer('sentence-transformers/LaBSE')
 #model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
 #model = SentenceTransformer('sentence-transformers/all-MiniLM-L12-v2')
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -77,5 +77,9 @@ print(results)
 
 with open('results.txt', 'w') as output_file:
   output_file.writelines(str(val) + "\n" for val in results)
+
+write_result = get_control_data.assign(PyVals=results)
+result_file = path + "result.xlsx"
+write_result.to_excel(result_file, index=False)
 
 
