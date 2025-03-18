@@ -1,5 +1,5 @@
 try:
-  with open("notes.txt", "r") as notes:
+  with open("jne.txt", "r") as notes:
     getnotes = []
     for lines in notes:
       getnotes.append(lines.strip("\r\n"))
@@ -26,6 +26,8 @@ import chromadb
 from chromadb.utils import embedding_functions
 from chromadb import Documents, EmbeddingFunction, Embeddings
 client = chromadb.Client()
+#dbPath = path + "chroma"
+#client = chromadb.PersistentClient(path=dbPath)
 
 import torch
 from transformers import AutoTokenizer, AutoModel
@@ -47,7 +49,8 @@ my_embeddings = Embedding_Function()
 dbName = "checkStr"
 dbDocs = data_jne
 
-collection = client.create_collection(
+collection = client.get_or_create_collection(
+#collection = client.create_collection(
   name=dbName,
   embedding_function=my_embeddings,
   metadata={"hnsw:space": "cosine"}
@@ -57,7 +60,7 @@ for i in range(len(dbDocs)):
   collection.add(
     documents=dbDocs[i],
     ids=str(i),
-    metadatas={"source": "data"}
+    metadatas={"source": "jne_data"}
   )
 
 dist_threshold = 0.15
@@ -74,9 +77,8 @@ for i in range(len(control_data_jne)):
 
 #results = '\n'.join(str(x) for x in results)
 print(results)
-
-with open('results.txt', 'w') as output_file:
-  output_file.writelines(str(val) + "\n" for val in results)
+#with open('results.txt', 'w') as output_file:
+#  output_file.writelines(str(val) + "\n" for val in results)
 
 write_result = get_control_data.assign(PyVals=results)
 result_file = path + "result.xlsx"
