@@ -11,6 +11,8 @@ except:
   try: import ctypes; ctypes.windll.user32.MessageBoxW(0, "check path...", "Python", 1)
   except: print("check path...")
 
+#
+
 data_file = path + "data_source.txt"
 control_data = path + "control_data.xlsx"
 
@@ -29,6 +31,8 @@ client = chromadb.Client()
 #dbPath = path + "chroma"
 #client = chromadb.PersistentClient(path=dbPath)
 
+
+
 import torch
 from transformers import AutoTokenizer, AutoModel
 #model = AutoModel.from_pretrained('jinaai/jina-embeddings-v2-base-de', trust_remote_code=True, torch_dtype=torch.bfloat16)
@@ -46,6 +50,8 @@ class Embedding_Function(EmbeddingFunction):
 
 my_embeddings = Embedding_Function()
 
+#dbName = "checkStr"
+#dbName = "checkStr"
 dbName = "checkStr"
 dbDocs = data_jne
 
